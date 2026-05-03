@@ -1,3 +1,6 @@
+# script modified by Claude in response to
+# prompts from George Chacko
+
 library(data.table)
 library(ggplot2)
 

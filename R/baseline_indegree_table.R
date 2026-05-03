@@ -1,3 +1,6 @@
+# Script written by George Chacko for local use
+# and modified by Claude for use on the cluster
+
 library(data.table)
 library(xtable)
 

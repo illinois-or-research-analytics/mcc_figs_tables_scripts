@@ -1,3 +1,6 @@
+# script renamed to corrected_csearch.R. on May 3, 2026
+# script written by Haotian Yi. Reviewed by George Chacko
+
 # plot_results.R
 #
 # Produces a side-by-side barplot comparing community search results from two
