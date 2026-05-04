@@ -1,0 +1,11 @@
+OUTPUT=$(readlink -f ./output)
+ERRORS=$(readlink -f ./errors)
+mkdir build
+cd build
+export CXX=/usr/bin/g++-11 && export CC=/usr/bin/gcc-11 && cmake -DCMAKE_BUILD_TYPE=Release /projects/illinois/eng/cs/chackoge/engrit/minhyuk2/git_repos/SASCA-ReSA
+# export CXX=/usr/bin/g++-11 && export CC=/usr/bin/gcc-11 && cmake -DCMAKE_BUILD_TYPE=Debug /projects/illinois/eng/cs/chackoge/engrit/minhyuk2/git_repos/SASCA-ReSA
+make
+cd ..
+
+/usr/bin/time -v ./build/bin/abm --config ./config.ini 2>${ERRORS}/abm.err 1>${OUTPUT}/abm.out
+rm -r ./build

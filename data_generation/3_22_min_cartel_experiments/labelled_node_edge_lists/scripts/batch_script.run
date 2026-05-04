@@ -1,0 +1,14 @@
+OUTPUT=$(readlink -f ./output)
+ERRORS=$(readlink -f ./errors)
+mkdir build
+cd build
+export CXX=/usr/bin/g++-11 && export CC=/usr/bin/gcc-11 && cmake -DCMAKE_BUILD_TYPE=Release /projects/illinois/eng/cs/chackoge/engrit/minhyuk2/git_repos/SASCA-ReSA
+# export CXX=/usr/bin/g++-11 && export CC=/usr/bin/gcc-11 && cmake -DCMAKE_BUILD_TYPE=Debug /projects/illinois/eng/cs/chackoge/engrit/minhyuk2/git_repos/SASCA-ReSA
+make
+cd ..
+/usr/bin/time -v ./build/bin/abm --config ./config.ini 2>${ERRORS}/abm.err 1>${OUTPUT}/abm.out
+rm -r ./build
+
+# source /projects/illinois/eng/cs/warnow/minhyuk2/git_repos/fresh_cm_pipeline/cm_pipeline/env/bin/activate
+# /usr/bin/time -v python ./verify.py > test_output_verify 2>&1
+# deactivate

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#moves to the directory the user was in when they ran qsub
+cd ${PBS_O_WORKDIR} #assumed to be the source tree
+
+#check that the script was submit from the right place.
+if [ -d "./scripts" ]
+then
+	echo "Ran from the correct directory. Continuing with the execution."
+else
+	echo "ERROR: Not ran from the right place! Plase submit from the root of your repository."
+	exit 1
+fi
+
+# check that the scirpt was run in a singularity shell
+raxmlexists=$(command -v raxml)
+if [[ $raxmlexists == "/usr/bin/raxml" ]]
+then
+    echo "RAxML exists so assuming that the the script was run in a singularity shell."
+else
+    echo "ERROR: RAxML binary does not exist. Make sure that the script is run inside a singularity shell."
+fi
+
+#build the programs and output the stdout to logs in scratch
+LOG_FILE="run-$(date +"%Y_%m_%d_%I_%M_%p").log"
+
+OUTPUT="./output/"
+ERRORS="./errors/"
+CONFIG_DIR="./"
+CONFIG_FILE_WITH_UPP2="upp2.config"
+
+export PATH=$PATH:/opt/siavash-code/env/bin/
+export SEPP_DEBUG=True
+
+source /opt/siavash-code/env/bin/activate
+
+/usr/bin/time -v python /opt/siavash-code/env/bin/run_upp.py -c ${CONFIG_DIR}/${CONFIG_FILE_WITH_UPP2} 2> ${ERRORS}/upp.err 1> ${OUTPUT}/upp.out
+
+deactivate
+
+# move the output log to logs
+echo "End Program Output" >> $LOG_FILE
+
+
+echo "Ran to completion" >> $LOG_FILE

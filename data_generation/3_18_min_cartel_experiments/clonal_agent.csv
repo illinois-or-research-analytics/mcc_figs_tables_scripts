@@ -1,0 +1,2 @@
+num_authors,pa_weight,fit_weight,num_authors_weight,author_reputation_weight,out_degree,alpha,fitness_lag_duration,fitness_peak_value,fitness_peak_duration
+6,0.25,0.25,0.25,0.25,35,0.5,0,1,1000

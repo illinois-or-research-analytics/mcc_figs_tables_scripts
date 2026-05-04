@@ -1,0 +1,21 @@
+OUTPUT=$(readlink -f ./output)
+ERRORS=$(readlink -f ./errors)
+
+source /projects/illinois/eng/cs/warnow/minhyuk2/git_repos/fresh_cm_pipeline/cm_pipeline/env/bin/activate
+cartel_script="/projects/illinois/eng/cs/chackoge/illinoiscomputes/abm/v6/generate_cartels.py"
+input_nodelist="./output/nodelist.csv"
+
+num_members="500"
+output_nodelist="./output/initial_${num_members}_cartel_nodelist.csv"
+from_last_x_years=2
+cartel="true" # true, false
+control="false" # true, false
+/usr/bin/time -v python ${cartel_script} --input-nodelist ${input_nodelist} --num-members ${num_members} --from-last-x-years ${from_last_x_years} --cartel ${cartel} --control ${control} --output-nodelist ${output_nodelist} 2>${ERRORS}/make_${num_members}_cartels.err 1>${OUTPUT}/make_${num_members}_cartels.out
+
+num_members="1000"
+output_nodelist="./output/initial_${num_members}_cartel_nodelist.csv"
+from_last_x_years=2
+cartel="true" # true, false
+control="false" # true, false
+/usr/bin/time -v python ${cartel_script} --input-nodelist ${input_nodelist} --num-members ${num_members} --from-last-x-years ${from_last_x_years} --cartel ${cartel} --control ${control} --output-nodelist ${output_nodelist} 2>${ERRORS}/make_${num_members}_cartels.err 1>${OUTPUT}/make_${num_members}_cartels.out
+deactivate

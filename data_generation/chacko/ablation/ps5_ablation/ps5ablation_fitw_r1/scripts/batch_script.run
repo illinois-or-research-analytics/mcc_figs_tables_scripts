@@ -1,0 +1,9 @@
+OUTPUT=$(readlink -f ./output)
+ERRORS=$(readlink -f ./errors)
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release /projects/illinois/eng/cs/chackoge/illinoiscomputes/abm/v6/chacko/SASCA-ReSA
+make
+cd ..
+/usr/bin/time -v ./build/bin/abm --config ./config.ini 2>${ERRORS}/abm.err 1>${OUTPUT}/abm.out
+rm -r ./build

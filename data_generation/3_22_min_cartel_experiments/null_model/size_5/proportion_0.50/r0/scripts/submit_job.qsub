@@ -1,0 +1,20 @@
+#!/bin/bash
+#PBS -A bbds
+#PBS -j oe
+#PBS -l nodes=1:ppn=32:xe
+#PBS -l walltime=168:00:00
+#PBS -l gres=shifter
+#PBS -q normal
+#PBS -N UPP2
+
+module load shifter
+$PBS_O_WORKDIR/scripts/shifter_login.sh
+shifterimg --user minhyuk2 pull minpark815/bio:latest
+
+cd $PBS_O_WORKDIR
+
+if [ -f aprun.log ]; then
+    mv aprun.log aprun.old.log
+fi
+
+aprun -b -N 1 -cc none -- shifter --image=minpark815/bio:latest -- $PBS_O_WORKDIR/scripts/batch_script.aprun > $PBS_O_WORKDIR/aprun.log
